@@ -1,16 +1,20 @@
 package com.example.sellerproject.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
 @Builder
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class SellerDTO {
 
-    String name;
+    @NotNull
+    String sellerName;
+    @NotNull
     String email;
+    @NotNull
     String phoneNumber;
 }

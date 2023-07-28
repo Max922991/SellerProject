@@ -8,12 +8,12 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 
+@Builder
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
 @Table(name = "products")
 public class Product implements Serializable {
 
@@ -27,6 +27,7 @@ public class Product implements Serializable {
     @NotNull(message = "description must be not null")
     String description;
     @Column(name = "price")
+    @NotNull
     int price;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     Seller seller;

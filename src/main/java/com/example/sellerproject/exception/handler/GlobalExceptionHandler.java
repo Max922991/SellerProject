@@ -2,6 +2,7 @@ package com.example.sellerproject.exception.handler;
 
 import com.example.sellerproject.exception.ProductNotValidException;
 import com.example.sellerproject.exception.ResourceNotFoundException;
+import com.example.sellerproject.exception.SellerNotValidException;
 import com.example.sellerproject.exception.error.AppError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,15 @@ public class GlobalExceptionHandler {
                 exception.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<AppError> sellerNotValidException(SellerNotValidException exception) {
+        log.error(exception.getMessage(), exception);
+        return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
 
 }
 

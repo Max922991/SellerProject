@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    image: postgres:14
+    container_name: java-postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=seller_project_demo3
+  app:
+    build: .
+    ports:
+      - 8085:8085
+    depends_on:
+      - db
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/seller_project_demo3
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_SHOW-SQL=true
+      - SPRING_JPA_HIBERNATE_GENERATE-DDL=true
+      - SPRING_LIQUIBASE_CHANGE-LOG=classpath:db/liquibase-changeLog-dev.xml
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass password
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+      driver: local

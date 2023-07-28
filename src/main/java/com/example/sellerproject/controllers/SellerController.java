@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/seller")
 @RequiredArgsConstructor
 public class SellerController {
+
     private final SellerService sellerService;
+
 
     @PostMapping("/register")
     public ResponseDTO registerSeller(@RequestBody Seller seller) {
-       return sellerService.createSeller(seller);
+        return sellerService.createSeller(seller);
     }
 
     @GetMapping("/{id}")
     public SellerDTO getSellerById(@PathVariable Long id) {
-       return sellerService.getSellerById(id);
+        return sellerService.getSellerById(id);
     }
-
 }

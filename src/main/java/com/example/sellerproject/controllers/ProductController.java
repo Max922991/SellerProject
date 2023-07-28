@@ -4,6 +4,8 @@ import com.example.sellerproject.dto.ProductDTO;
 import com.example.sellerproject.dto.ResponseDTO;
 import com.example.sellerproject.models.Product;
 import com.example.sellerproject.services.ProductService;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,8 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<ProductDTO> getProducts(
-            @RequestParam(value = "pageNo", required = false, defaultValue = "") int pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize
+            @RequestParam(value = "pageNo", required = false, defaultValue = "0")@Min(0) int pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "2")@Min(1) @Max(100) int pageSize
     ) {
         return productService.getProductsUsePagination(pageNo, pageSize);
     }
